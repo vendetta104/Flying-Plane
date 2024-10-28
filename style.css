@@ -1,0 +1,107 @@
+@font-face {
+    font-family: "Luckiest Guy";
+    src: url("/resources/fonts/LuckiestGuy-Regular.ttf")
+}
+
+* {
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    user-drag: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+html {
+    font-size: 100%;
+}
+
+body {
+    margin: 0;
+    background-color: #8ecae6;
+}
+
+@keyframes bgAnim {
+    0% {
+        background-position-x: 0px;
+    }
+
+    100% {
+        background-position-x: -1280px;
+    }
+}
+
+#container {
+    position: relative;
+    width: 1280px;
+    height: 720px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    background-image: url("/resources/projects/flying-plane-game/BG.png");
+    background-position-y: bottom;
+    background-size: cover;
+    animation-name: bgAnim;
+    animation-duration: 7s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    overflow: hidden;
+}
+
+@keyframes moveAnim {
+    0% {
+        left: 1300px;
+    }
+
+    100% {
+        left: -200px;
+    }
+}
+
+#cactus1,
+#cactus2 {
+    animation-name: moveAnim;
+    animation-iteration-count: infinite;
+}
+
+#cactus1 {
+    position: absolute;
+    bottom: 0;
+    left: 50px;
+    width: 150px;
+    animation-duration: 3s;
+    animation-timing-function: linear;
+}
+
+#cactus2 {
+    position: absolute;
+    bottom: 0;
+    left: 100px;
+    width: 190px;
+    animation-duration: 3.3s;
+    animation-timing-function: linear;
+}
+
+#player {
+    position: absolute;
+    width: 140px;
+    transition: transform 1.5s ease-out;
+}
+
+#orange {
+    position: absolute;
+    width: 60px;
+}
+
+h1 {
+    color: #2D2D2D;
+    font-size: 3rem;
+    position: absolute;
+    top: 55px;
+    left: 30px;
+    margin: 0;
+    font-family: "Luckiest Guy", sans-serif;
+}
