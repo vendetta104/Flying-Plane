@@ -1,33 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flying Plane</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 
 <body>
+  
+     <h1>Save Princess Peach</h1>
 
-    <div id="container">
-        <!-- cactus -->
-        <img id="cactus1" src="/resources/projects/flying-plane-game/cactus_1.png">
+	 <div id="game-container">
+		 <div id="story-container">
+			 <p id="story-text">Are you ready? Let's play!</p>
+		</div>
+	</div>
 
-        <!-- cactus 2 -->
-        <img id="cactus2" src="/resources/projects/flying-plane-game/cactus_2.png">
-
-        <!-- orange -->
-        <img src="/resources/sandbox_templates/flying-plane/orange1.png" id="orange">
-
-        <!-- plane -->
-        <img src="/resources/sandbox_templates/flying-plane/plane.gif" id="player">
-
-        <!-- score -->
-        <h1>Score: 0</h1>
-    </div>
-
-    <script src="script.js"></script>
+	<div id="button-container">
+		 <button  onclick="scene1()">Play</button>
+	</div>
+  
+    <script type="text/javascript" src="script.js"></script>
 </body>
 
-</html>
+</html>    
