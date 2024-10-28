@@ -1,100 +1,42 @@
-let player = document.getElementById("player");
-let container = document.getElementById("container");
-let pumpkin = document.getElementById("pumpkin");
-let orange = document.getElementById("orange");
-let mousePosX;
-let gravity = 0.3;
-let speedY = 0;
-let score = 0;
-let scoreText = document.querySelector("h1");
-let passStep = false;
+let gameContainer = document.getElementById("game-container");
 
-container.addEventListener("click", flyUp);
+let storyText = document.getElementById("story-text");
 
-function flyUp(event) {
-    speedY = -10;
-    mousePosX = event.clientX - container.offsetLeft;
-}
+let buttonContainer = document.getElementById("button-container");
 
-function update() {
-    updatePlayer();
-    updateOrange();
-     checkForItemCollect(orange);
-    window.requestAnimationFrame(update);
-}
+//scene 1 – player goes to scene 2 or scene 3
+ function scene1() {
+	storyText.innerHTML =  "(You are Mario) You are just sitting there until someone tells you that the evil Bowser kidnapped Princess Peach. It is your duty to go and save her.";
+	buttonContainer.innerHTML = "<button  onclick = 'scene2()'> Squash the goombas and go to the next area.</button><button  onclick = 'scene3()'> Run and go to the next area.</button>";
+	gameContainer.style.backgroundImage ="url('https://static1.cbrimages.com/wordpress/wp-content/uploads/2023/08/super-mario-bros-world-1-1-ending.jpg')";
+ }
 
-function updatePlayer() {
-    // move horizontally
-    let diffX = mousePosX - player.offsetLeft - (player.offsetWidth / 2);
-    let playerTargetX = player.offsetLeft + (diffX * 0.015);
-    player.style.left = playerTargetX + "px";
+//player goes to scene 3 or "game over"
+ function scene2() {
+	storyText.innerHTML =  "Now you are underground. What would you do?";
+	buttonContainer.innerHTML = "<button  onclick = 'scene3()'> Rush through and get to the next area.</button><button  onclick = 'gameover()'> Kill all the enemies.</button>";
+	gameContainer.style.backgroundImage ="url('https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/92dc41d9-3e98-4010-a39f-e87a33468720/dg7237f-52786c22-07fe-432e-8929-cb6001e0814b.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzkyZGM0MWQ5LTNlOTgtNDAxMC1hMzlmLWU4N2EzMzQ2ODcyMFwvZGc3MjM3Zi01Mjc4NmMyMi0wN2ZlLTQzMmUtODkyOS1jYjYwMDFlMDgxNGIuanBnIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.uvav-8XgQuDArN1aRvtD1ueKgF0pifIQSm2V_afx3J0')";
+ }
 
-    // move vertically
-    speedY += gravity;
-    let playerTargetY = player.offsetTop + speedY;
-    if (playerTargetY > container.offsetHeight) {
-        playerTargetY = container.offsetHeight;
-    }
-    player.style.top = playerTargetY + "px";
+//player goes to "win" scene or "game over" scene
+ function scene3() {
+	storyText.innerHTML = "Now you're at Bowser's castle. This is the final stage.";
+	buttonContainer.innerHTML = "<button  onclick = 'win()'> Rush through and kill bowser.</button><button  onclick = 'gameover()'> Kill the enemies.</button>";
+	gameContainer.style.backgroundImage ="url('https://static.wikia.nocookie.net/royal-fighters-colosseum/images/7/7a/Bowsercastle.png/revision/latest?cb=20150606031127')";
+ }
+        
+//game over 
+ function gameover() {
+	storyText.innerHTML =  "One of the enemies killed you!";
+	buttonContainer.innerHTML = "<button onclick = 'scene1()'> Try Again</button>";
+	gameContainer.style.backgroundImage ="url('/resources/projects/create-your-own-adventure-game/game-over.jpg')";
+ } 
 
-    // rotate
-    if (speedY < -5) {
-        // go up
-        player.style.transform = "rotate(-25deg)";
-    } else if (speedY > 5) {
-        // fall down
-        player.style.transform = "rotate(25deg)";
-    } else {
-        player.style.transform = "rotate(0deg)";
-    }
-}
+//player wins
+ function win() {
+	storyText.innerHTML = "You killed Bowser and saved Princess Peach!";
+	buttonContainer.innerHTML = "<button onclick = 'scene1()'> Play Again</button>";
+	gameContainer.style.backgroundImage ="url('/resources/projects/create-your-own-adventure-game/trophy.png')";
+ }
 
-function updateOrange() {
-    let targetOrangeX = orange.offsetLeft - 5;
-    if (targetOrangeX < -orange.offsetWidth) {
-        targetOrangeX = container.offsetWidth;
-        orange.style.top = (Math.random() * 400) + "px";
-    }
-    orange.style.left = targetOrangeX + "px";
-}
-
-function checkForItemCollect(item) {
-    let diffX = (item.offsetLeft + (item.offsetWidth / 2)) - (player.offsetLeft + (player.offsetWidth / 2));
-
-    let diffY = (item.offsetTop + (item.offsetHeight / 2)) - (player.offsetTop + (player.offsetHeight / 2));
-
-    if (Math.abs(diffX) < 40 && Math.abs(diffY) < 40) {
-        item.style.left = container.offsetWidth + "px";
-        item.style.top = (Math.random() * 400) + "px";
-
-        if (item == orange) {
-            score++;
-            if (score >= 3) {
-                passStep = true;
-            }
-        }
-        scoreText.innerHTML = "score: " + score;
-    }
-}
-
-window.requestAnimationFrame(update);
-window.onload = window.onresize = resizeGame;
-
-function resizeGame() {
-    let gameRatio = container.offsetWidth / container.offsetHeight;
-    let windowRatio = window.innerWidth / window.innerHeight;
-
-    container.style.position = "absolute";
-    container.style.left = `${(window.innerWidth - container.offsetWidth) / 2}px`;
-    container.style.top = `${(window.innerHeight - container.offsetHeight) / 2}px`;
-
-    let newScale;
-    if (gameRatio > windowRatio) {
-        newScale = window.innerWidth / container.offsetWidth;
-        if (newScale > 1) newScale = 1;
-    } else {
-        newScale = window.innerHeight / container.offsetHeight;
-        if (newScale > 1) newScale = 1;
-    }
-    container.style.transform = `scale(${newScale})`;
-}
+          
